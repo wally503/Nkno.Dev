@@ -6,8 +6,7 @@ import '@fontsource/roboto/400.css';
 import '@fontsource/roboto/500.css';
 import '@fontsource/roboto/700.css';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
-import { Switch } from '@mui/material';
-import { Router, Route } from 'react-router-dom';
+import { Route, Routes, BrowserRouter } from 'react-router-dom';
 import MtgSets from './pages/MtgSets.tsx'
 import MtgSetCardList from './pages/MtgSetCardList.tsx'
 import Home from './pages/Home.tsx'
@@ -31,28 +30,22 @@ const customTheme = createTheme({
             fontFamily: 'Droid Sans',
         },
         fontFamily: 'Lato',
-    },
+    }
 });
 
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
     <React.StrictMode>
         <ThemeProvider theme={customTheme}>
-            <Router>
+            <BrowserRouter>
                 <Layout>
-                    <Switch>
-                        <Route exact path="/">
-                            <Home/> 
-                        </Route>
-                        <Route path="/MtgCardSetList">
-                            <MtgSets />
-                        </Route>
-                        <Route path="/MtgSets">
-                            <MtgSetCardList />
-                        </Route>
-                    </Switch>
+                    <Routes>
+                        <Route path="/" element={<Home />} />
+                        <Route path="/mtgSetsSearch" element={<MtgSets />} />
+                        <Route path="/mtgSetCards" element={<MtgSetCardList />} />
+                    </Routes>
                 </Layout>
-            </Router>
+            </BrowserRouter>
         </ThemeProvider>
-  </React.StrictMode>,
+  </React.StrictMode>
 )
