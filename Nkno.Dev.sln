@@ -1,0 +1,33 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.9.34622.214
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nkno.Dev.Server", "Nkno.Dev.Server\Nkno.Dev.Server.csproj", "{1C1CD2EF-F02F-4EF3-97AE-2EF299878E0C}"
+EndProject
+Project("{54A90642-561A-4BB1-A94E-469ADEE60C69}") = "nkno.dev.client", "nkno.dev.client\nkno.dev.client.esproj", "{2E3EE740-A249-4D6D-B6CD-D4BA144EC7A5}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{1C1CD2EF-F02F-4EF3-97AE-2EF299878E0C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1C1CD2EF-F02F-4EF3-97AE-2EF299878E0C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1C1CD2EF-F02F-4EF3-97AE-2EF299878E0C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1C1CD2EF-F02F-4EF3-97AE-2EF299878E0C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2E3EE740-A249-4D6D-B6CD-D4BA144EC7A5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2E3EE740-A249-4D6D-B6CD-D4BA144EC7A5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2E3EE740-A249-4D6D-B6CD-D4BA144EC7A5}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{2E3EE740-A249-4D6D-B6CD-D4BA144EC7A5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2E3EE740-A249-4D6D-B6CD-D4BA144EC7A5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2E3EE740-A249-4D6D-B6CD-D4BA144EC7A5}.Release|Any CPU.Deploy.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {AB85C034-2A68-4084-BBA0-CA6C7038677A}
+	EndGlobalSection
+EndGlobal
