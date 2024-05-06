@@ -2,10 +2,13 @@ import { useEffect, useState } from 'react'
 import '../models/SingleMtgCard'
 import { Card, Container, Table, TableBody, TableCell, TableHead, TableRow } from '@mui/material';
 import UrlHandler from '../tools/urlHandler.ts';
+import CardDetailBar from '../components/CardDetailBar.tsx'
 
 function MtgSetCardList() {
 
     const [cards, setMtgSetCards] = useState<SingleMtgCard[]>();
+    const [selectedCardId, setSelectedCardId] = useState<number>();
+    const [showCard, setShowCard] = useState<boolean>(false);
 
     useEffect(() =>
     {
@@ -40,7 +43,11 @@ function MtgSetCardList() {
                     )
                 }
             </TableBody>
-        </Table>
+        </Table>;
+
+    //const lookup = (selectedCard === null && showCard == 1)
+    //    ? <div className="nofocus" />
+    //    : <CardDetailBar activeCardId={selectedCardId} />
 
     return (
         <Container>
@@ -51,6 +58,7 @@ function MtgSetCardList() {
                 {mtgSetData}
             </Card>
         </Container>
+        
     );
 
     async function populateCards(setId: string = "ICE") {

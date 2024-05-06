@@ -34,7 +34,7 @@ namespace Nkno.Dev.Server.Controllers
                 var response = ApiCall.GetExternalApiResponse(baseUrl).GetAwaiter().GetResult();
                 if (response != null)
                 {
-                    MtgSetCollection collection = JsonSerializer.Deserialize<MtgSetCollection>(response)!;
+                    MtgSetCollectionResponse collection = JsonSerializer.Deserialize<MtgSetCollectionResponse>(response)!;
                     if (collection != null)
                         return collection.Sets ?? new List<MtgSet>();
                 }
@@ -48,7 +48,7 @@ namespace Nkno.Dev.Server.Controllers
         }
 
         [HttpGet("GetSetCardsById")]
-        public IEnumerable<MtgCard> GetCardsInSetById(string setId, int page=0, int pageSize = 20)
+        public IEnumerable<MtgCardDetail> GetCardsInSetById(string setId, int page=0, int pageSize = 20)
         {
             try
             {
@@ -57,9 +57,9 @@ namespace Nkno.Dev.Server.Controllers
                 var response = ApiCall.GetExternalApiResponse(baseUrl).GetAwaiter().GetResult();
                 if (response != null)
                 {
-                    MtgCardCollection collection = JsonSerializer.Deserialize<MtgCardCollection>(response)!;
+                    MtgCardCollectionResponse collection = JsonSerializer.Deserialize<MtgCardCollectionResponse>(response)!;
                     if (collection != null)
-                        return collection.Cards ?? new List<MtgCard>();
+                        return collection.Cards ?? new List<MtgCardDetail>();
                 }
             }
             catch (Exception ex)
@@ -67,7 +67,29 @@ namespace Nkno.Dev.Server.Controllers
                 //something reporting
                 Console.WriteLine(ex.Message);
             }
-            return new List<MtgCard>();
+            return new List<MtgCardDetail>();
+        }
+
+        [HttpGet("GetCardById")]
+        public MtgCardResponse GetCardById(string cardId)
+        {
+            try
+            {
+                var baseUrl = $"https://api.magicthegathering.io/v1/cards/{cardId}";
+                var response = ApiCall.GetExternalApiResponse(baseUrl).GetAwaiter().GetResult();
+                if (response != null)
+                {
+                    MtgCardResponse collection = JsonSerializer.Deserialize<MtgCardResponse>(response)!;
+                    if (collection != null)
+                        return collection ?? new MtgCardResponse();
+                }
+            }
+            catch (Exception ex)
+            {
+                //something reporting
+                Console.WriteLine(ex.Message);
+            }
+            return new MtgCardResponse();
         }
     }
 }

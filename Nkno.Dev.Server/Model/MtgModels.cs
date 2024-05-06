@@ -5,7 +5,7 @@ namespace Nkno.Dev.Server.Model
 {
     namespace MtgModels
     {
-        public class MtgSetCollection
+        public class MtgSetCollectionResponse
         {
             [JsonPropertyName("sets")]
             public List<MtgSet>? Sets { get; set; }
@@ -28,13 +28,19 @@ namespace Nkno.Dev.Server.Model
             public bool? IsOnlineOnly { get; set; }
         }
 
-        public class MtgCardCollection
+        public class MtgCardCollectionResponse
         {
             [JsonPropertyName("cards")]
-            public List<MtgCard>? Cards { get; set; }
+            public List<MtgCardDetail>? Cards { get; set; }
         }
 
-        public class MtgCard
+        public class MtgCardResponse
+        {
+            [JsonPropertyName("card")]
+            public MtgCardDetail? Card { get; set; }
+        }
+
+        public class MtgCardDetail
         {
             [JsonPropertyName("name")]
             public string? Name { get; set; }

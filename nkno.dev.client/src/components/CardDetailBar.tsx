@@ -1,10 +1,10 @@
 import { Image, Box, Drawer, Typography } from '@mui/material';
-import SingleMtgCard from '../models/SingleMtgCard'
+import '../models/SingleMtgCard.tsx'
 
 const drawerWidth = 500;
 const drawerPaperWidth = 500;
 
-export default function CardDetailBar(activeCard: SingleMtgCard){
+export default function CardDetailBar(activeCardId: number){
 
 
     return (
@@ -16,14 +16,23 @@ export default function CardDetailBar(activeCard: SingleMtgCard){
                 }} >
                 <Box>
                     <Typography variant="h3">
-                        {activeCard.name}
+                        {activeCardId}
                     </Typography>
                 </Box>
                 <Box
                     component="img"
-                    src={activeCard.imageUrl}
+                    src={activeCardId}
                 />
             </Drawer>
         </Box>
     )
+
+    async function getCard(cardId: number) {
+        let queryValues: string[] = [setId];
+        let queryTypes: string[] = ["setId"];
+        let queryString = UrlHandler(queryValues, queryTypes);
+        const response = await fetch('Mtg/GetSetCardsById' + queryString);
+        const data = await response.json();
+        setMtgSetCards(data);
+    }
 };
