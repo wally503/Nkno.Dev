@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import '../models/SingleMtgCard'
-import { Button, Container, FormControlLabel, Radio, RadioGroup, Table, TableBody, TableCell, TableHead, TableRow } from '@mui/material';
+import { Card, Container, Table, TableBody, TableCell, TableHead, TableRow } from '@mui/material';
 import UrlHandler from '../tools/urlHandler.ts';
 
 function MtgSetCardList() {
@@ -29,7 +29,7 @@ function MtgSetCardList() {
             <TableBody>
                 {
                     cards.map(mtgSet =>
-                        <TableRow key={mtgSet.id}>
+                        <TableRow key={mtgSet.id} onClick={() => console.log(mtgSet.id)}>
                             <TableCell>{mtgSet.multiverseid}</TableCell>
                             <TableCell>{mtgSet.name}</TableCell>
                             <TableCell>{mtgSet.cmc}</TableCell>
@@ -44,8 +44,12 @@ function MtgSetCardList() {
 
     return (
         <Container>
-            <h1>MTG Cards In Set Api TSX</h1>
-            {mtgSetData}
+            <Card>
+                <h1>MTG Cards In Set Api TSX</h1>   
+            </Card>
+            <Card>
+                {mtgSetData}
+            </Card>
         </Container>
     );
 

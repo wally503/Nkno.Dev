@@ -8,7 +8,7 @@ import { useState } from 'react'
 const drawerWidth = 240;
 const drawerPaperWidth = 240;
 
-export default function Layout({ children }) {
+export default function Layout({ children } ) {
 
     //const classes = {
     //    root: {
