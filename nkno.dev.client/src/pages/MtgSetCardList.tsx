@@ -1,19 +1,27 @@
 import { useEffect, useState } from 'react'
 import '../models/SingleMtgCard'
-import { Card, Container, Table, TableBody, TableCell, TableHead, TableRow } from '@mui/material';
+import { Box, Card, Container, Table, TableBody, TableCell, TableHead, TableRow } from '@mui/material';
 import UrlHandler from '../tools/urlHandler.ts';
 import CardDetailBar from '../components/CardDetailBar.tsx'
 
 function MtgSetCardList() {
 
     const [cards, setMtgSetCards] = useState<SingleMtgCard[]>();
-    const [currentSelected, setCurrentSelected] = useState(null);
+    const [currentSelected, setCurrentSelected] = useState<number>(0);
+    const [currentSelectedCard, setCurrentSelectedCard] = useState<SingleMtgCard | null>();
 
-    const setActive = (cardId) => {
+    const setActive = (cardId : number) => {
         if (currentSelected != cardId) {
             setCurrentSelected(cardId);
+            var find = cards?.find(x => x.multiverseidint === cardId);
+            if (find != undefined) {
+                setCurrentSelectedCard(find);
+            }
         }
-        else setCurrentSelected(null);
+        else {
+            setCurrentSelected(0);
+            setCurrentSelectedCard(null);
+        }
     };
 
     useEffect(() =>
@@ -41,10 +49,10 @@ function MtgSetCardList() {
                         <TableRow key={mtgSet.id}
                             onClick={() => {
                                 console.log("mutiverse id: " + mtgSet.multiverseid + " and id: " + mtgSet.id)
-                                setActive(mtgSet.multiverseid)
+                                setActive(mtgSet.multiverseidint)
                             }}
                             sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-                            selected={currentSelected === mtgSet.multiverseid}
+                            selected={currentSelected === mtgSet.multiverseidint}
                         >
                             <TableCell>{mtgSet.multiverseid}</TableCell>
                             <TableCell>{mtgSet.name}</TableCell>
@@ -58,9 +66,11 @@ function MtgSetCardList() {
             </TableBody>
         </Table>;
 
-    const lookup = currentSelected === null
-        ? <h2>Trying to load this card</h2>
-        : <CardDetailBar activeCardId={currentSelected} />
+    const lookup = currentSelected === 0
+        ? <h2>Waiting on Selection</h2>
+        : <Box>
+            <CardDetailBar {...currentSelectedCard as SingleMtgCard} />
+          </Box>
 
     return (
         <Container>

@@ -1,3 +1,4 @@
+using System.Data;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
@@ -48,6 +49,16 @@ namespace Nkno.Dev.Server.Model
             public string? Id { get; set; }
             [JsonPropertyName("multiverseid")]
             public string? MultiverseId { get; set; }
+            [JsonPropertyName("multiverseidint")]
+            public int? MultiverseIdInt 
+            { 
+                get 
+                {
+                    int v = 0;
+                    int.TryParse(MultiverseId, out v);
+                    return v;
+                } 
+            }
             [JsonPropertyName("manaCost")]
             public string? ManaCost { get; set; }
             [JsonPropertyName("cmc")]

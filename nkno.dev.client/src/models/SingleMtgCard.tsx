@@ -2,6 +2,7 @@ interface SingleMtgCard {
     name: string;
     id: string;
     multiverseid: string; // multiverse id
+    multiverseidint: number; // multiverse id - api preconverted to number form
     manaCost: string;
     cmc: number;
     colors: string[];
