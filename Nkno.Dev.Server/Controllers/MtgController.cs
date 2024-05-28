@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Nkno.Dev.Server.Interfaces;
 using Nkno.Dev.Server.Model;
 using Nkno.Dev.Server.Model.MtgModels;
 using Nkno.Dev.Server.Static;
@@ -10,13 +11,15 @@ namespace Nkno.Dev.Server.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class MtgController : ControllerBase
+    public class MtgController : ControllerBase, IMtgController
     {
         private readonly ILogger<MtgController> _logger;
+        private readonly IMtgApiDataSource _mtgController;
 
-        public MtgController(ILogger<MtgController> logger)
+        public MtgController(ILogger<MtgController> logger, IMtgApiDataSource mtgController)
         {
             _logger = logger;
+            _mtgController = mtgController;
         }
 
 
@@ -26,18 +29,7 @@ namespace Nkno.Dev.Server.Controllers
         {
             try
             {
-                var baseUrl = "https://api.magicthegathering.io/v1/sets";
-                if (setId != null)
-                    baseUrl += "//" + setId;
-                if(setId == null) 
-                    baseUrl += $"?pageSize={pageSize}&page={page}";
-                var response = ApiCall.GetExternalApiResponse(baseUrl).GetAwaiter().GetResult();
-                if (response != null)
-                {
-                    MtgSetCollectionResponse collection = JsonSerializer.Deserialize<MtgSetCollectionResponse>(response)!;
-                    if (collection != null)
-                        return collection.Sets ?? new List<MtgSet>();
-                }
+                return _mtgController.GetSets(setId, page, pageSize);
             }
             catch (Exception ex)
             {
@@ -52,15 +44,7 @@ namespace Nkno.Dev.Server.Controllers
         {
             try
             {
-                var baseUrl = $"https://api.magicthegathering.io/v1/cards?set={setId}";
-                baseUrl += $"&pageSize={pageSize}&page={page}";
-                var response = ApiCall.GetExternalApiResponse(baseUrl).GetAwaiter().GetResult();
-                if (response != null)
-                {
-                    MtgCardCollectionResponse collection = JsonSerializer.Deserialize<MtgCardCollectionResponse>(response)!;
-                    if (collection != null)
-                        return collection.Cards ?? new List<MtgCardDetail>();
-                }
+                return _mtgController.GetCardsInSetById(setId, page, pageSize);
             }
             catch (Exception ex)
             {
@@ -71,25 +55,18 @@ namespace Nkno.Dev.Server.Controllers
         }
 
         [HttpGet("GetCardById")]
-        public MtgCardResponse GetCardById(string cardId)
+        public MtgCardDetail GetCardById(string cardId)
         {
             try
             {
-                var baseUrl = $"https://api.magicthegathering.io/v1/cards/{cardId}";
-                var response = ApiCall.GetExternalApiResponse(baseUrl).GetAwaiter().GetResult();
-                if (response != null)
-                {
-                    MtgCardResponse collection = JsonSerializer.Deserialize<MtgCardResponse>(response)!;
-                    if (collection != null)
-                        return collection ?? new MtgCardResponse();
-                }
+                return _mtgController.GetCardById(cardId);
             }
             catch (Exception ex)
             {
                 //something reporting
                 Console.WriteLine(ex.Message);
             }
-            return new MtgCardResponse();
+            return new MtgCardDetail();
         }
     }
 }

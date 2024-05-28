@@ -7,8 +7,14 @@ import CardDetailBar from '../components/CardDetailBar.tsx'
 function MtgSetCardList() {
 
     const [cards, setMtgSetCards] = useState<SingleMtgCard[]>();
-    const [selectedCardId, setSelectedCardId] = useState<number>();
-    const [showCard, setShowCard] = useState<boolean>(false);
+    const [currentSelected, setCurrentSelected] = useState(null);
+
+    const setActive = (cardId) => {
+        if (currentSelected != cardId) {
+            setCurrentSelected(cardId);
+        }
+        else setCurrentSelected(null);
+    };
 
     useEffect(() =>
     {
@@ -32,7 +38,14 @@ function MtgSetCardList() {
             <TableBody>
                 {
                     cards.map(mtgSet =>
-                        <TableRow key={mtgSet.id} onClick={() => console.log(mtgSet.id)}>
+                        <TableRow key={mtgSet.id}
+                            onClick={() => {
+                                console.log("mutiverse id: " + mtgSet.multiverseid + " and id: " + mtgSet.id)
+                                setActive(mtgSet.multiverseid)
+                            }}
+                            sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+                            selected={currentSelected === mtgSet.multiverseid}
+                        >
                             <TableCell>{mtgSet.multiverseid}</TableCell>
                             <TableCell>{mtgSet.name}</TableCell>
                             <TableCell>{mtgSet.cmc}</TableCell>
@@ -45,9 +58,9 @@ function MtgSetCardList() {
             </TableBody>
         </Table>;
 
-    //const lookup = (selectedCard === null && showCard == 1)
-    //    ? <div className="nofocus" />
-    //    : <CardDetailBar activeCardId={selectedCardId} />
+    const lookup = currentSelected === null
+        ? <h2>Trying to load this card</h2>
+        : <CardDetailBar activeCardId={currentSelected} />
 
     return (
         <Container>
@@ -57,8 +70,10 @@ function MtgSetCardList() {
             <Card>
                 {mtgSetData}
             </Card>
+            <Card>
+                {lookup}
+            </Card>
         </Container>
-        
     );
 
     async function populateCards(setId: string = "ICE") {

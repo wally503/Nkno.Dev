@@ -1,38 +1,69 @@
-import { Image, Box, Drawer, Typography } from '@mui/material';
+import { Container, Box, Drawer, Typography } from '@mui/material';
 import '../models/SingleMtgCard.tsx'
+import UrlHandler from '../tools/urlHandler.ts';
+import { useEffect, useState } from 'react'
 
 const drawerWidth = 500;
 const drawerPaperWidth = 500;
 
-export default function CardDetailBar(activeCardId: number){
+function CardDetailBar(activeCardId: number){
+    const [card, setCard] = useState<SingleMtgCard>();
 
+    useEffect(() => {
+        getCard(2673)
+        /*getCard(activeCardId)*/
+    },
+    []);
 
-    return (
-        <Box sx={{ display: 'flex' }}>
-            <Drawer variant="permanent" anchor="right"
+    const cardInfoWindow = card === undefined
+        ? <p>Will the card data load?</p>
+        : <Box sx={{ display: 'flex' }}>
+            {/*<Drawer variant="permenant" anchor="right"*/}
+            {/*    sx={{*/}
+            {/*        width: drawerWidth,*/}
+            {/*        ".MuiDrawer-paper": { width: drawerPaperWidth }*/}
+            {/*    }} >*/}
+            {/*    <Box>*/}
+            {/*        <Typography variant="h3">*/}
+            {/*            {card?.name}*/}
+            {/*        </Typography>*/}
+            {/*    </Box>*/}
+            {/*    <Box*/}
+            {/*        component="img"*/}
+            {/*        src={card?.imageUrl}*/}
+            {/*    />*/}
+            {/*</Drawer>*/}
+            <Drawer variant="permenant" anchor="right"
                 sx={{
                     width: drawerWidth,
                     ".MuiDrawer-paper": { width: drawerPaperWidth }
                 }} >
                 <Box>
                     <Typography variant="h3">
-                        {activeCardId}
+                        {card?.name}
                     </Typography>
                 </Box>
                 <Box
                     component="img"
-                    src={activeCardId}
+                    src={card?.imageUrl}
                 />
             </Drawer>
-        </Box>
+        </Box>;
+
+    return (
+        <Container>
+            {cardInfoWindow}
+        </Container>
     )
 
     async function getCard(cardId: number) {
-        let queryValues: string[] = [setId];
-        let queryTypes: string[] = ["setId"];
+        let queryValues: string[] = [cardId.toString()];
+        let queryTypes: string[] = ["cardId"];
         let queryString = UrlHandler(queryValues, queryTypes);
-        const response = await fetch('Mtg/GetSetCardsById' + queryString);
+        const response = await fetch('Mtg/GetCardById' + queryString);
         const data = await response.json();
-        setMtgSetCards(data);
+        setCard(data);
     }
 };
+
+export default CardDetailBar
