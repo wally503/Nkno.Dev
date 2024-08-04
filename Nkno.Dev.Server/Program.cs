@@ -26,7 +26,6 @@ if (localSqlConnectionString != null)
         options => options.UseSqlServer(localSqlConnectionString)
         );
 
-    //builder.Services.AddDbContext<FFXIVLocalSqlDbContext>(){ };
 }
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 

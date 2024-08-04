@@ -17,7 +17,6 @@ namespace Nkno.Dev.Server.Controllers
         public IEnumerable<FFXIVInstanceData> Get()
         {
             return _dataSource.GetAllEncounters();
-            return new List<FFXIVInstanceData>();
         }
     }
 }

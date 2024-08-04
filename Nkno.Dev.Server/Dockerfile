@@ -5,7 +5,9 @@ USER app
 WORKDIR /app
 EXPOSE 8080
 EXPOSE 8081
+EXPOSE 7023
 
+#ENV ASPNETCORE_HTTPS_PORT=8085
 
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS with-node
 RUN apt-get update
