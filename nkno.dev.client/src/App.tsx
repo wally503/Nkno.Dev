@@ -1,24 +1,24 @@
-import Weather from './component/Weather.tsx'
-import Ffxiv from './component/FfxivEncounters.tsx'
-import { ThemeProvider, createTheme } from '@mui/material/styles';
+import HomePage from './component/Home.tsx';
+import Weather from './component/Weather.tsx';
+import Ffxiv from './component/FfxivEncounters.tsx';
+import AboutPage from './component/About.tsx';
+import PageNotFound from './component/PageNotFound.tsx';
+import { Box } from "@mui/material";
+import { Route, Routes } from 'react-router-dom';
 import NavBar from './NavBar.tsx'
-import { Home } from '@mui/icons-material';
-
-const darkTheme = createTheme({
-    palette: {
-        mode: 'dark',
-    }
-});
 
 function App() {
-
-    return (
-        <ThemeProvider theme={darkTheme}>
+    return (   
+        <Box>
             <NavBar />
-            <Home />
-            <Ffxiv />
-            <Weather />
-        </ThemeProvider>
+            <Routes>
+                <Route path='/' index element={ <HomePage /> } />
+                <Route path='/Weather' element={ <Weather /> } />
+                <Route path='/Encounters' element={ <Ffxiv /> } />
+                <Route path='/About' element={ <AboutPage /> } />
+                <Route path='*' element={ <PageNotFound /> } />
+            </Routes>  
+        </Box>
     );
 }
 

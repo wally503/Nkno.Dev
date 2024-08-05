@@ -1,8 +1,8 @@
-/*import { BrowserRouter as Router, Routes, Route } from "react-router-dom"*/
-
+import { useEffect, useState } from 'react';
 import { Container, AppBar, Toolbar, Typography, Button, Box } from "@mui/material";
 import Grid from "@mui/material/Unstable_Grid2";
 import { ThemeProvider, createTheme } from '@mui/material/styles';
+import { useNavigate } from 'react-router-dom';
 
 const navTitleTheme = createTheme({
     typography: {
@@ -10,7 +10,6 @@ const navTitleTheme = createTheme({
         fontSize: 10
     }
 });
-
 const navItemTheme = createTheme({
     typography: {
         fontFamily: 'Cuprum',
@@ -24,49 +23,51 @@ const navItemTheme = createTheme({
     }
 });
 
-function NavBar() {
+export default function NavBar() {
+    const navigate = (
+        useNavigate()
+    )
+
+    //const [selectedPage, setSelectedPage] = useState(navPaths[0]);
+    //const handleNavButtonClick = (navId: string) => {
+    //    setSelectedPage(navId);
+    //}
+    const navPaths =
+        [
+            { buttonDisplay: 'Home', route: '/' },
+            { buttonDisplay: 'Weather', route: '/Weather' },
+            { buttonDisplay: 'Encounters', route: '/Encounters' },
+            { buttonDisplay: 'About', route: '/About' }
+        ];
+
     return (
-        <AppBar position="fixed">
-            <Container maxWidth="xl">
-                <Toolbar disableGutters style={{ display: "flex", justifyContent: "space-between" }}>
-                    <ThemeProvider theme={navTitleTheme}>
-                        <Typography variant="h3" textAlign="center">
-                            Nkno.Dev
-                        </Typography>
-                    </ThemeProvider>
-                    <ThemeProvider theme={navItemTheme}>
-                        <Box sx={{ p: 0, my: 2}}>
-                            <Typography color="textPrimary">
-                                <Grid container spacing={4}>
-                                    <Grid>
-                                        <Button variant="text">
-                                            Home
-                                        </Button>
-                                    </Grid>
-                                    <Grid>
-                                        <Button variant="text">
-                                            Weather
-                                        </Button>
-                                    </Grid>
-                                    <Grid>
-                                        <Button variant="text">
-                                            Encounters
-                                        </Button>
-                                    </Grid>
-                                    <Grid>
-                                        <Button variant="text">
-                                            About
-                                        </Button>
-                                    </Grid>
-                                </Grid>
+        <Box>
+            <AppBar position="fixed">
+                <Container maxWidth={false} disableGutters>
+                    <Toolbar style={{ display: "flex", justifyContent: "space-between" }}>
+                        <ThemeProvider theme={navTitleTheme}>
+                            <Typography variant="h3" textAlign="center">
+                                Nkno.Dev
                             </Typography>
-                        </Box>
-                    </ThemeProvider>
-                </Toolbar>
-            </Container>
-        </AppBar >
+                        </ThemeProvider>
+                        <ThemeProvider theme={navItemTheme}>
+                            <Box sx={{ p: 0, my: 2 }}>
+                                <Typography color="textPrimary">
+                                    <Grid container spacing={4}>
+                                        {navPaths.map((item) => (
+                                            <Grid>
+                                                <Button variant="text" onClick={() => { navigate(item.route) }} >
+                                                    {item.buttonDisplay}
+                                                </Button>
+                                            </Grid>
+                                        ))}
+                                    </Grid>
+                                </Typography>
+                            </Box>
+                        </ThemeProvider>
+                    </Toolbar>
+                </Container>
+            </AppBar >
+        </Box>
     );
 }
-
-
-export default NavBar;
