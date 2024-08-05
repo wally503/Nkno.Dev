@@ -5,7 +5,7 @@ function HomePage()
     return (
         <div>
             <Box>
-                <h3>Home</h3>
+                <h1>Home</h1>
             </Box>
             <Box>
                 <Typography>

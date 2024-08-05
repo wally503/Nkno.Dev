@@ -16,7 +16,11 @@ namespace Nkno.Dev.Server.Controllers
         [HttpGet(Name = "GetEncounters")]
         public IEnumerable<FFXIVInstanceData> Get()
         {
-            return _dataSource.GetAllEncounters();
+            // doing a hand filter for now -- adding methods later
+            return _dataSource.GetAllEncounters()
+                .Where(x => x.Name == "Aeve Fennella")
+                .GroupBy(x => x.InstanceId)
+                .Select(x => x.First());
         }
     }
 }

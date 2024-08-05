@@ -11,13 +11,15 @@ function App() {
     return (   
         <Box>
             <NavBar />
-            <Routes>
-                <Route path='/' index element={ <HomePage /> } />
-                <Route path='/Weather' element={ <Weather /> } />
-                <Route path='/Encounters' element={ <Ffxiv /> } />
-                <Route path='/About' element={ <AboutPage /> } />
-                <Route path='*' element={ <PageNotFound /> } />
-            </Routes>  
+            <div style={{ marginTop: 80 }}>
+                <Routes>
+                    <Route path='/' index element={ <HomePage /> } />
+                    <Route path='/Weather' element={ <Weather /> } />
+                    <Route path='/Encounters' element={ <Ffxiv /> } />
+                    <Route path='/About' element={ <AboutPage /> } />
+                    <Route path='*' element={ <PageNotFound /> } />
+                </Routes>  
+            </div>
         </Box>
     );
 }

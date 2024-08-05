@@ -4,7 +4,7 @@ function AboutPage() {
     return (
         <div>
             <Box>
-                <h3>About</h3>
+                <h1>About</h1>
             </Box>
             <Box>
                 <Typography>

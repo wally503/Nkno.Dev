@@ -27,10 +27,6 @@ export default function NavBar() {
         useNavigate()
     )
 
-    //const [selectedPage, setSelectedPage] = useState(navPaths[0]);
-    //const handleNavButtonClick = (navId: string) => {
-    //    setSelectedPage(navId);
-    //}
     const navPaths =
         [
             { buttonDisplay: 'Home', route: '/' },

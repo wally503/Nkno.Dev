@@ -1,7 +1,11 @@
 import { useEffect, useState } from 'react';
-import { Table, TableRow, TableHead, TableBody, TableContainer, TableCell, Paper, Box } from "@mui/material";
+import {
+    Table, TableRow, TableHead, FormControl,InputLabel, Select, MenuItem,
+    TableBody, TableContainer, TableCell, Paper, Box } from "@mui/material";
+import { SelectChangeEvent } from '@mui/material/Select';
+import JobDistributionPie from '../component/JobDistributionPie.tsx'; 
 
-interface Encounters {
+export interface Encounter {
     name: string;
     job: string;
     zone: string;
@@ -16,11 +20,21 @@ interface Encounters {
 }
 
 function Ffxiv() {
-    const [encounters, setEncounters] = useState<Encounters[]>();
+    const [encounters, setEncounters] = useState<Encounter[]>();
+    const [distinctChars, setDistinctChars] = useState<string[]>();
+    const [selectedChar, setSelectedChar] = useState<string>();
+
+    useEffect(() => {
+        populateDistinctCharacters();
+    }, [encounters]);
 
     useEffect(() => {
         populateEncounterData();
     }, []);
+
+    const handleChange = (event: SelectChangeEvent) => {
+        setSelectedChar(event.target.value as string);
+    };
 
     const contents = encounters === undefined
         ? <Box>Loading...</Box>
@@ -49,12 +63,33 @@ function Ffxiv() {
             </Table>
         </TableContainer>;
 
+    const selectDropdown = distinctChars === undefined
+        ? <Box>Broken!</Box>
+        : <Box>
+            <FormControl>
+                <InputLabel id="demo-simple-select-label">Character</InputLabel>
+                <Select
+                    labelId="demo-simple-select-label"
+                    id="demo-simple-select"
+                    value={selectedChar}
+                    label="Character"
+                    onChange={handleChange}
+                >
+                    {distinctChars.map(char => <MenuItem value={char}>{char}</MenuItem>)}
+                </Select>
+            </FormControl>
+            <JobDistributionPie { ... encounters } />
+        </Box>
+
+
     return (
         <div>
             <Box>
                 <h3 id="tabelLabel">ffxiv encounters</h3>
                 <p>This component demonstrates fetching data from the server.</p>
-                {contents}
+                {selectDropdown}
+                
+                { contents}
             </Box>
         </div>
     );
@@ -63,6 +98,17 @@ function Ffxiv() {
         const response = await fetch('ffxivencounter');
         const data = await response.json();
         setEncounters(data);
+    };
+    async function populateDistinctCharacters() {
+        if (encounters != null) {
+            const distinctCharacters = encounters.filter(
+                (thing, i, arr) => arr.findIndex(t => t.name === thing.name) === i
+            ).map(x => x.name);
+            setDistinctChars(distinctCharacters);
+        }
+        else { 
+            setDistinctChars([""]);
+        }
     }
 }
 
