@@ -1,4 +1,3 @@
-import { useEffect, useState } from 'react';
 import { Container, AppBar, Toolbar, Typography, Button, Box } from "@mui/material";
 import Grid from "@mui/material/Unstable_Grid2";
 import { ThemeProvider, createTheme } from '@mui/material/styles';
@@ -52,10 +51,10 @@ export default function NavBar() {
                         </ThemeProvider>
                         <ThemeProvider theme={navItemTheme}>
                             <Box sx={{ p: 0, my: 2 }}>
-                                <Typography color="textPrimary">
+                                <Typography component={'span'} color="textPrimary">
                                     <Grid container spacing={4}>
                                         {navPaths.map((item) => (
-                                            <Grid>
+                                            <Grid key={item.buttonDisplay}>
                                                 <Button variant="text" onClick={() => { navigate(item.route) }} >
                                                     {item.buttonDisplay}
                                                 </Button>
