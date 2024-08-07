@@ -40,7 +40,7 @@ namespace Nkno.Dev.Server.Controllers
                 .GroupBy(x => x.InstanceId)
                 .Select(x => x.First());
 
-            throw Exception("need to fix the group by, it doesn't work");
+            throw new Exception("need to fix the group by, it doesn't work");
 
             // Need to group them
             var jobGroups = data.GroupBy(x => x.Job);
