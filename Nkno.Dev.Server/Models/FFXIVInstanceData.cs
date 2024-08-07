@@ -31,4 +31,17 @@ namespace Nkno.Dev.Server.Models
         [Column("Deaths")]
         public int Deaths { get; set; }
     }
+
+    public class PieData
+    {
+        public string Job { get; set; }
+        public List<SubPieData> SubPie { get; set; }
+        public List<string> PieEncounters { get; set; }
+    }
+    public class SubPieData
+    {
+        public int EncounterCount { get; set; }
+        public int Deaths { get; set; }
+        public List<string> SubPieEncounters { get; set; }
+    }
 }
