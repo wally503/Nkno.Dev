@@ -5,16 +5,18 @@ using Nkno.Dev.Server.Models;
 namespace Nkno.Dev.Server.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
-    public class FFXIVEncounterController : ControllerBase
+    [Route("api/[controller]")]
+    public class FFXIVEncountersController : ControllerBase
     {
-        private IFFXIVDataSource _dataSource;
-        public FFXIVEncounterController(IFFXIVDataSource ffxivDataSource)
+        private IFFXIVDataService _dataSource;
+        public FFXIVEncountersController(IFFXIVDataService ffxivDataSource)
         {
             _dataSource = ffxivDataSource;
         }
-        [HttpGet(Name = "GetEncounters")]
-        public IEnumerable<FFXIVInstanceData> Get()
+
+        [HttpGet]
+        [Route("encounters")]
+        public IEnumerable<FFXIVInstanceData> GetEncounters()
         {
             // doing a hand filter for now -- adding methods later
             return _dataSource.GetAllEncounters()

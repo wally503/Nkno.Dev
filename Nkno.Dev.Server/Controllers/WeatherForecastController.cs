@@ -4,7 +4,7 @@ using Nkno.Dev.Server.Models;
 namespace Nkno.Dev.Server.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("api/[controller]")]
     public class WeatherForecastController : ControllerBase
     {
         private static readonly string[] Summaries = new[]
@@ -19,8 +19,9 @@ namespace Nkno.Dev.Server.Controllers
             _logger = logger;
         }
 
-        [HttpGet(Name = "GetWeatherForecast")]
-        public IEnumerable<WeatherForecast> Get()
+        [HttpGet]
+        [Route("regular")]
+        public IEnumerable<WeatherForecast> GetRegularWeather()
         {
             return Enumerable.Range(1, 5).Select(index => new WeatherForecast
             {
@@ -29,6 +30,18 @@ namespace Nkno.Dev.Server.Controllers
                 Summary = Summaries[Random.Shared.Next(Summaries.Length)]
             })
             .ToArray();
+        }
+
+        [HttpGet]
+        [Route("lots")]
+        public IEnumerable<WeatherForecast> GetLotsOfWeather()
+        {
+            return Enumerable.Range(5, 20).Select(index => new WeatherForecast
+            {
+                Date = DateOnly.FromDateTime(DateTime.Now.AddDays(index)),
+                TemperatureC = Random.Shared.Next(-20, 55),
+                Summary = Summaries[Random.Shared.Next(Summaries.Length)]
+            });
         }
     }
 }

@@ -3,7 +3,7 @@ import {
     Table, TableRow, TableHead, FormControl,InputLabel, Select, MenuItem,
     TableBody, TableContainer, TableCell, Paper, Box } from "@mui/material";
 import { SelectChangeEvent } from '@mui/material/Select';
-import JobDistributionPie from '../component/JobDistributionPie.tsx'; 
+import JobDistributionPie from './JobDistributionPie.tsx'; 
 
 export interface Encounter {
     name: string;
@@ -66,16 +66,20 @@ function Ffxiv() {
     const selectDropdown = distinctChars === undefined
         ? <Box>Broken!</Box>
         : <Box>
-            <FormControl>
+            <FormControl fullWidth>
                 <InputLabel id="demo-simple-select-label">Character</InputLabel>
                 <Select
                     labelId="demo-simple-select-label"
                     id="demo-simple-select"
                     value={selectedChar}
                     label="Character"
-                    onChange={handleChange}
-                >
-                    {distinctChars.map(char => <MenuItem value={char}>{char}</MenuItem>)}
+                    onChange={handleChange}>
+                    {
+                        distinctChars.map(char =>
+                            <MenuItem value={char}>
+                                {char}
+                            </MenuItem>)
+                    }
                 </Select>
             </FormControl>
             <JobDistributionPie { ... encounters } />
@@ -95,7 +99,7 @@ function Ffxiv() {
     );
 
     async function populateEncounterData() {
-        const response = await fetch('ffxivencounter');
+        const response = await fetch('api/ffxivencounters/encounters');
         const data = await response.json();
         setEncounters(data);
     };

@@ -5,9 +5,9 @@ using System.Data.Common;
 
 namespace Nkno.Dev.Server.Data
 {
-    public class FFXIVLocalSqlDbContext : DbContext
+    public class LocalSqlDbContext : DbContext
     {
-        public FFXIVLocalSqlDbContext(DbContextOptions<FFXIVLocalSqlDbContext> options) : base(options)
+        public LocalSqlDbContext(DbContextOptions<LocalSqlDbContext> options) : base(options)
         {
         }
 

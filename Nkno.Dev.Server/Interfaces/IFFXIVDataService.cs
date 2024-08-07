@@ -2,7 +2,7 @@
 
 namespace Nkno.Dev.Server.Interfaces
 {
-    public interface IFFXIVDataSource
+    public interface IFFXIVDataService
     {
         public IEnumerable<FFXIVInstanceData> GetAllEncounters();
     }

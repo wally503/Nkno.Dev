@@ -1,6 +1,6 @@
 import HomePage from './component/Home.tsx';
 import Weather from './component/Weather.tsx';
-import Ffxiv from './component/FfxivEncounters.tsx';
+import Ffxiv from './component/Encounters.tsx';
 import AboutPage from './component/About.tsx';
 import PageNotFound from './component/PageNotFound.tsx';
 import { Box } from "@mui/material";
