@@ -1,7 +1,7 @@
-import { Container, AppBar, Toolbar, Typography, Button, Box } from "@mui/material";
-import Grid from "@mui/material/Unstable_Grid2";
-import { ThemeProvider, createTheme } from '@mui/material/styles';
 import { useNavigate } from 'react-router-dom';
+import { ThemeProvider, createTheme } from '@mui/material/styles';
+import { Container, AppBar, Toolbar, Typography, Button, Box } from "@mui/material";
+import Grid from "@mui/material/Grid";
 
 const navTitleTheme = createTheme({
     typography: {
@@ -31,6 +31,7 @@ export default function NavBar() {
         [
             { buttonDisplay: 'Home', route: '/' },
             { buttonDisplay: 'Weather', route: '/Weather' },
+            { buttonDisplay: 'Game History', route: '/GameHistory' },
             { buttonDisplay: 'Encounters', route: '/Encounters' },
             { buttonDisplay: 'About', route: '/About' }
         ];
@@ -46,11 +47,11 @@ export default function NavBar() {
                             </Typography>
                         </ThemeProvider>
                         <ThemeProvider theme={navItemTheme}>
-                            <Box sx={{ p: 0, my: 2 }}>
+                            <Box sx={{ p: 0, my: 1, paddingTop: 4}}>
                                 <Typography component={'span'} color="textPrimary">
                                     <Grid container spacing={4}>
                                         {navPaths.map((item) => (
-                                            <Grid key={item.buttonDisplay}>
+                                            <Grid key={item.buttonDisplay} sx={{ paddingLeft: 2}}>
                                                 <Button variant="text" onClick={() => { navigate(item.route) }} >
                                                     {item.buttonDisplay}
                                                 </Button>

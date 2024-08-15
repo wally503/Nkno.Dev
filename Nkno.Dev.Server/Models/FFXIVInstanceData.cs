@@ -34,14 +34,32 @@ namespace Nkno.Dev.Server.Models
 
     public class PieData
     {
+        /// <summary>
+        /// FFXIV Job
+        /// </summary>
         public string Job { get; set; }
-        public List<SubPieData> SubPie { get; set; }
+        /// <summary>
+        /// SubPieData on Selecting a job, will fork into its own set
+        /// </summary>
+        public List<SubPieData> SubPieData { get; set; }
+        /// <summary>
+        /// All encounter data encompassing the job
+        /// </summary>
         public List<string> PieEncounters { get; set; }
     }
     public class SubPieData
     {
+        /// <summary>
+        /// Distinct SubPieEncounter IDs
+        /// </summary>
         public int EncounterCount { get; set; }
+        /// <summary>
+        /// Deaths that occured collectively in the dungeon (maybe w/ or w/o selectee?)
+        /// </summary>
         public int Deaths { get; set; }
+        /// <summary>
+        /// Relative Encounters to the Job + Total Deaths occured (on selection, adjust table view)
+        /// </summary>
         public List<string> SubPieEncounters { get; set; }
     }
 }

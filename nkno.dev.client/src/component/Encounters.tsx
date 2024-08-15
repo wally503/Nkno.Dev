@@ -4,7 +4,6 @@ import {
     TableBody, TableContainer, TableCell, Paper, Box, 
     Typography} from "@mui/material";
 import { SelectChangeEvent } from '@mui/material/Select';
-/*import JobDistributionPie from './JobDistributionPie.tsx'; */
 import { PieChart } from '@mui/x-charts';
 
 interface Encounter {
