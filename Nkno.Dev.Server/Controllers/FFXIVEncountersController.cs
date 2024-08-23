@@ -22,11 +22,7 @@ namespace Nkno.Dev.Server.Controllers
         [Route("encounters")]
         public IEnumerable<FFXIVInstanceData> GetEncounters()
         {
-            var data = _dataSource.GetAllEncounters()
-                .Where(x => x.Name == "Aeve Fennella")
-                .Select(x => x.InstanceId);
-
-            // doing a hand filter for now -- adding methods later
+            // doing a hand filter for now -- maybe be more general later?
             return _dataSource.GetAllEncounters()
                 .Where(x => x.Name == "Aeve Fennella")
                 .GroupBy(x => x.InstanceId)
@@ -39,7 +35,6 @@ namespace Nkno.Dev.Server.Controllers
         {
             //This is painfully hard enough to do in C#, I don't suspect JS/TS will be any friendlier
             List<PieData> pieDatas = new List<PieData>();
-
 
             var data = _dataSource.GetAllEncounters()
                 .Where(x => x.Name == name)

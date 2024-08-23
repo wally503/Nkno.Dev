@@ -61,5 +61,12 @@ export default defineConfig({
             key: fs.readFileSync(keyFilePath),
             cert: fs.readFileSync(certFilePath),
         }
+    },
+    optimizeDeps: {
+        include: [
+            '@emotion/react',
+            '@emotion/styled',
+            '@mui/material/Tooltip'
+        ],
     }
 })

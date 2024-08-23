@@ -24,6 +24,45 @@ namespace Nkno.Dev.Server.Sources
             _dbContext.SaveChanges();
         }
 
+        public void AddExpansionsVersion(GameHistory gameHistory, ExpansionsVersion expansion)
+        {
+            if (gameHistory.ExpansionsVersions == null)
+                gameHistory.ExpansionsVersions = new List<ExpansionsVersion>() { expansion };
+            else
+                gameHistory.ExpansionsVersions.Add(expansion);
+            _dbContext.Update(gameHistory);
+            _dbContext.ChangeTracker.DetectChanges();
+            _dbContext.SaveChanges();
+        }
 
+        public void EditGameHistory(GameHistory gameHistory)
+        {
+            _dbContext.Update(gameHistory);
+            _dbContext.ChangeTracker.DetectChanges();
+            _dbContext.SaveChanges();
+        }
+
+        public void EditExpansionsVersion(GameHistory gameHistory, ExpansionsVersion expansion)
+        {
+            gameHistory.ExpansionsVersions?.Add(expansion);
+            _dbContext.Update(gameHistory);
+            _dbContext.ChangeTracker.DetectChanges();
+            _dbContext.SaveChanges();
+        }
+
+        public void DeleteGameHistory(GameHistory gameHistory)
+        {
+            _dbContext.Remove(gameHistory);
+            _dbContext.ChangeTracker.DetectChanges();
+            _dbContext.SaveChanges();
+        }
+
+        public void DeleteExpansionsVersion(GameHistory gameHistory, ExpansionsVersion expansion)
+        {
+            gameHistory.ExpansionsVersions?.Remove(expansion);
+            _dbContext.Update(gameHistory);
+            _dbContext.ChangeTracker.DetectChanges();
+            _dbContext.SaveChanges();
+        }
     }
 }

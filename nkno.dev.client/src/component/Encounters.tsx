@@ -1,9 +1,8 @@
 import { useEffect, useState } from 'react';
 import {
-    Table, TableRow, TableHead, FormControl,InputLabel, Select, MenuItem,
+    Table, TableRow, TableHead, 
     TableBody, TableContainer, TableCell, Paper, Box, 
     Typography} from "@mui/material";
-import { SelectChangeEvent } from '@mui/material/Select';
 import { PieChart } from '@mui/x-charts';
 
 interface Encounter {
@@ -21,34 +20,23 @@ interface Encounter {
     deaths: number;
 }
 
-interface PieData {
-    job: string;
-    subPie: SubPieData[];
-    pieEncounters: string[];
-}
-interface SubPieData {
-    encounterCount: number;
-    deaths: number;
-    subPieEncounters: string[];
+interface Table {
+    id: string;
+    value: number;
+    label: string;
 }
 
-
+const groupBy = <T, K extends keyof any>(arr: T[], key: (i: T) => K) =>
+    arr.reduce((groups, item) => {
+        (groups[key(item)] ||= []).push(item);
+        return groups;
+    }, {} as Record<K, T[]>);
 
 function Ffxiv() {
     const [encounters, setEncounters] = useState<Encounter[]>();
-    const [distinctChars, setDistinctChars] = useState<string[]>();
-    const [selectedChar, setSelectedChar] = useState<string>();
-    const [pieData, setPieData] = useState<PieData[]>();
-
-    //useEffect(() => {
-    //    if (selectedChar != '') {
-    //        populatePieData(selectedChar);
-    //    }
-    //}, [selectedChar]);
-
-    useEffect(() => {
-        populateDistinctCharacters();
-    }, [encounters]);
+    const [pieData, setPieData] = useState<Record<string, Encounter[]>[]>();
+    const [subPieData, setSubPieData] = useState<Record<number, Encounter[]>[]>();
+    const [pieSelection, setPieSelection] = useState<string>();
 
     useEffect(() => {
         const controller = new AbortController();
@@ -60,13 +48,13 @@ function Ffxiv() {
         return () => controller.abort();
     }, []);
 
-    const handleChange = (event: SelectChangeEvent) => {
-        let charName = event.target.value as string
-        setSelectedChar(charName);
-        if (charName != '' && charName != undefined) {
-            populatePieData(charName);
-        }
-    };
+    useEffect(() => {
+        const controller = new AbortController();
+
+        populateMainPieData();
+
+        return () => controller.abort();
+    }, [encounters])
 
     const contents = encounters === undefined
         ? <Box>Loading...</Box>
@@ -95,26 +83,7 @@ function Ffxiv() {
             </Table>
         </TableContainer>;
 
-    const selectDropdown = distinctChars === undefined
-        ? <Box>Broken!</Box>
-        : <Box>
-            <FormControl sx={{ m: 1, minWidth: 180 }} size="small" align="left">
-                <InputLabel>Character</InputLabel>
-                <Select
-                    value={selectedChar}
-                    label="Character"
-                    onChange={handleChange}>
-                    {
-                        distinctChars.map(char =>
-                            <MenuItem value={char}>
-                                {char}
-                            </MenuItem>)
-                    }
-                </Select>
-            </FormControl>
-        </Box>
-
-    const pieMain = selectedChar === undefined
+    const pieMain = JSON.stringify(pieData) === '{}'
         ? <Box>
             <Typography>
                 "Waiting on Selection"
@@ -123,15 +92,18 @@ function Ffxiv() {
         : <PieChart
             series={[
                 {
-                    data: [
-
-
+                    data: 
+                            
+                        [
                         { id: 0, value: 10, label: 'series A' },
                         { id: 1, value: 15, label: 'series B' },
                         { id: 2, value: 20, label: 'series C' },
                     ],
                 },
             ]}
+                //{ id: 0, value: 10, label: 'series A' },
+                //{ id: 1, value: 15, label: 'series B' },
+                //{ id: 2, value: 20, label: 'series C' },
             width={400}
             height={200}
         />;
@@ -139,38 +111,33 @@ function Ffxiv() {
     return (
         <div>
             <Box>
-                <h3 id="tabelLabel">ffxiv encounters</h3>
-                <p>This component demonstrates fetching data from the server.</p>
-                { selectDropdown }
+                {/*{ selectDropdown }*/}
                 { pieMain }
                 { contents }
             </Box>
         </div>
     );
 
-    async function populateEncounterData() {
-        const response = await fetch('api/ffxivencounters/encounters');
-        const data = await response.json();
-        setEncounters(data);
+    async function populateMainPieData() {
+        if (encounters == null) {
+            setPieData([]);
+            return;
+        }
+
+        let groupByJobs = groupBy(encounters, x => x.job)
+        setPieData(groupByJobs);
     };
-    async function populateDistinctCharacters() {
-        if (encounters != null) {
-            const distinctCharacters = encounters.filter(
-                (thing, i, arr) => arr.findIndex(t => t.name === thing.name) === i
-            ).map(x => x.name);
-            setDistinctChars(distinctCharacters);
-        }
-        else { 
-            setDistinctChars([""]);
-        }
-    }
 
-    async function populatePieData(charName: string) {
+    async function populateSubPieData(selectedJob: string) {
+        if (pieData == null) {
+            setSubPieData([]);
+            return;
+        }
 
-        const response = await fetch('api/ffxivencounters/characterpie', { body: JSON.stringify({ name: { charName } }) });
-        const data = await response.json();
-        setPieData(data);
-    }
+        let group: Encounter[] = pieData[selectedJob];
+        let groupByDeaths = groupBy(group, x => x.deaths)
+        setSubPieData(groupByDeaths);
+    };
 }
 
 export default Ffxiv;
