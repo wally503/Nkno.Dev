@@ -6,7 +6,7 @@ namespace Nkno.Dev.Server.Interfaces
     {
         IEnumerable<GameHistory> GetGameHistories(int take = 25, int page = 0);
         void AddGameHistory(GameHistory gameHistory);
-        void AddExpansionsVersion(GameHistory gameHistory, ExpansionsVersion gameHistory);
+        void AddExpansionsVersion(GameHistory gameHistory, ExpansionsVersion expansion);
         void EditGameHistory(GameHistory gameHistory);
         void EditExpansionsVersion(GameHistory gameHistory, ExpansionsVersion expansion);
         void DeleteGameHistory(GameHistory gameHistory);
