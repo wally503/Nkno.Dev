@@ -1,9 +1,8 @@
 import { useEffect, useState } from 'react';
 import {
     Table, TableRow, TableHead, 
-    TableBody, TableContainer, TableCell, Paper, Box, 
-    Typography} from "@mui/material";
-import { PieChart } from '@mui/x-charts';
+    TableBody, TableContainer, TableCell, Paper, Box} from "@mui/material";
+/*import { PieChart } from '@mui/x-charts';*/
 
 interface Encounter {
     name: string;
@@ -26,17 +25,17 @@ interface Table {
     label: string;
 }
 
-const groupBy = <T, K extends keyof any>(arr: T[], key: (i: T) => K) =>
-    arr.reduce((groups, item) => {
-        (groups[key(item)] ||= []).push(item);
-        return groups;
-    }, {} as Record<K, T[]>);
+//const groupBy = <T, K extends keyof any>(arr: T[], key: (i: T) => K) =>
+//    arr.reduce((groups, item) => {
+//        (groups[key(item)] ||= []).push(item);
+//        return groups;
+//    }, {} as Record<K, T[]>);
 
 function Ffxiv() {
     const [encounters, setEncounters] = useState<Encounter[]>();
-    const [pieData, setPieData] = useState<Record<string, Encounter[]>[]>();
-    const [subPieData, setSubPieData] = useState<Record<number, Encounter[]>[]>();
-    const [pieSelection, setPieSelection] = useState<string>();
+    //const [pieData, setPieData] = useState<Record<string, Encounter[]>[]>();
+    //const [subPieData, setSubPieData] = useState<Record<number, Encounter[]>[]>();
+    //const [pieSelection, setPieSelection] = useState<string>();
 
     useEffect(() => {
         const controller = new AbortController();
@@ -51,7 +50,7 @@ function Ffxiv() {
     useEffect(() => {
         const controller = new AbortController();
 
-        populateMainPieData();
+/*        populateMainPieData();*/
 
         return () => controller.abort();
     }, [encounters])
@@ -83,61 +82,61 @@ function Ffxiv() {
             </Table>
         </TableContainer>;
 
-    const pieMain = JSON.stringify(pieData) === '{}'
-        ? <Box>
-            <Typography>
-                "Waiting on Selection"
-            </Typography>
-        </Box>
-        : <PieChart
-            series={[
-                {
-                    data: 
+    //const pieMain = JSON.stringify(pieData) === '{}'
+    //    ? <Box>
+    //        <Typography>
+    //            "Waiting on Selection"
+    //        </Typography>
+    //    </Box>
+    //    : <PieChart
+    //        series={[
+    //            {
+    //                data: 
                             
-                        [
-                        { id: 0, value: 10, label: 'series A' },
-                        { id: 1, value: 15, label: 'series B' },
-                        { id: 2, value: 20, label: 'series C' },
-                    ],
-                },
-            ]}
-                //{ id: 0, value: 10, label: 'series A' },
-                //{ id: 1, value: 15, label: 'series B' },
-                //{ id: 2, value: 20, label: 'series C' },
-            width={400}
-            height={200}
-        />;
+    //                    [
+    //                    { id: 0, value: 10, label: 'series A' },
+    //                    { id: 1, value: 15, label: 'series B' },
+    //                    { id: 2, value: 20, label: 'series C' },
+    //                ],
+    //            },
+    //        ]}
+    //            //{ id: 0, value: 10, label: 'series A' },
+    //            //{ id: 1, value: 15, label: 'series B' },
+    //            //{ id: 2, value: 20, label: 'series C' },
+    //        width={400}
+    //        height={200}
+    //    />;
 
     return (
         <div>
             <Box>
                 {/*{ selectDropdown }*/}
-                { pieMain }
+                {/*    { pieMain }*/}
                 { contents }
             </Box>
         </div>
     );
 
-    async function populateMainPieData() {
-        if (encounters == null) {
-            setPieData([]);
-            return;
-        }
+    //async function populateMainPieData() {
+    //    if (encounters == null) {
+    //        setPieData([]);
+    //        return;
+    //    }
 
-        let groupByJobs = groupBy(encounters, x => x.job)
-        setPieData(groupByJobs);
-    };
+    //    let groupByJobs = groupBy(encounters, x => x.job)
+    //    setPieData(groupByJobs);
+    //};
 
-    async function populateSubPieData(selectedJob: string) {
-        if (pieData == null) {
-            setSubPieData([]);
-            return;
-        }
+    //async function populateSubPieData(selectedJob: string) {
+    //    if (pieData == null) {
+    //        setSubPieData([]);
+    //        return;
+    //    }
 
-        let group: Encounter[] = pieData[selectedJob];
-        let groupByDeaths = groupBy(group, x => x.deaths)
-        setSubPieData(groupByDeaths);
-    };
+    //    let group: Encounter[] = pieData[selectedJob];
+    //    let groupByDeaths = groupBy(group, x => x.deaths)
+    //    setSubPieData(groupByDeaths);
+    //};
 }
 
 export default Ffxiv;

@@ -1,0 +1,45 @@
+﻿{
+  "ConnectionStringName": "dab-connection-string",
+  "Dacpac": null,
+  "DatabaseType": 3,
+  "MergeDacpacs": false,
+  "ProjectPath": "C:\\Users\\mikeg\\source\\repos\\Nkno.Dev\\Nkno.Dev.Db",
+  "Tables": [
+    {
+      "Name": "[dbo].[BrewTypes]",
+      "ObjectType": 0
+    },
+    {
+      "Name": "[dbo].[Coffees]",
+      "ObjectType": 0
+    },
+    {
+      "Name": "[dbo].[CoffeeTypes]",
+      "ObjectType": 0
+    },
+    {
+      "Name": "[dbo].[Countries]",
+      "ObjectType": 0
+    },
+    {
+      "Name": "[dbo].[ReviewDetails]",
+      "ObjectType": 0
+    },
+    {
+      "Name": "[dbo].[Reviews]",
+      "ObjectType": 0
+    },
+    {
+      "Name": "[dbo].[RoastersShops]",
+      "ObjectType": 0
+    },
+    {
+      "Name": "[dbo].[RoastTypes]",
+      "ObjectType": 0
+    },
+    {
+      "Name": "[dbo].[Users]",
+      "ObjectType": 0
+    }
+  ]
+}

@@ -11,7 +11,7 @@ import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import IconButton from '@mui/material/IconButton';
 import { PlaylistAdd } from '@mui/icons-material';
-import GameHistoryForm, { GameHistoryFormProps } from './GameHistoryForm.tsx';
+import GameHistoryForm/*, { GameHistoryFormProps }*/ from './GameHistoryForm.tsx';
 export interface GameHistory {
     id: string;
     userId: string;
@@ -36,14 +36,14 @@ export interface ExpansionsVersions {
 
 function GameHistory() {''
     const [histories, setHistories] = useState<GameHistory[]>([]);
-    const [mainAEOpen, setMainAEOpen] = React.useState(false);
+    //const [mainAEOpen, setMainAEOpen] = React.useState(false);
 
-    const handleAddEditClose = () => {
-        setMainAEOpen(false);
-    };
-    const handleAddEditOpen = () => {
-        setMainAEOpen(true);
-    };
+    //const handleAddEditClose = () => {
+    //    setMainAEOpen(false);
+    //};
+    //const handleAddEditOpen = () => {
+    //    setMainAEOpen(true);
+    //};
 
     useEffect(() => {
         const controller = new AbortController();
@@ -68,7 +68,8 @@ function GameHistory() {''
                             <TableCell>Hours</TableCell>
                             <TableCell>Game Completed</TableCell>
                             <TableCell align="right">
-                                <IconButton onClick={handleAddEditOpen} aria-label="mainAdd" sx={{ color: 'orange' }} >
+                                {/*<IconButton onClick={handleAddEditOpen} aria-label="mainAdd" sx={{ color: 'orange' }} >*/}
+                                <IconButton aria-label="mainAdd" sx={{ color: 'orange' }} >
                                     <PlaylistAdd />
                                     <Typography>Add New</Typography>
                                 </IconButton>

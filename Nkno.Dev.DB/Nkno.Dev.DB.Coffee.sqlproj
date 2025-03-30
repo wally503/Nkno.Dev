@@ -11,8 +11,8 @@
     <OutputType>Database</OutputType>
     <RootPath>
     </RootPath>
-    <RootNamespace>Nkno.Dev.DB</RootNamespace>
-    <AssemblyName>Nkno.Dev.DB</AssemblyName>
+    <RootNamespace>Nkno.Dev.DB.Coffee</RootNamespace>
+    <AssemblyName>Nkno.Dev.DB.Coffee</AssemblyName>
     <ModelCollation>1033,CI</ModelCollation>
     <DefaultFileStructure>BySchemaAndSchemaType</DefaultFileStructure>
     <DeployToDatabase>True</DeployToDatabase>
@@ -24,6 +24,8 @@
     <TargetDatabaseSet>True</TargetDatabaseSet>
     <DefaultCollation>SQL_Latin1_General_CP1_CI_AS</DefaultCollation>
     <DefaultFilegroup>PRIMARY</DefaultFilegroup>
+    <PermissionSet>EXTERNAL_ACCESS</PermissionSet>
+    <GenerateCreateScript>True</GenerateCreateScript>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <OutputPath>bin\Release\</OutputPath>
@@ -63,8 +65,14 @@
   </ItemGroup>
   <ItemGroup>
     <Build Include="dbo\Tables\Users.sql" />
-    <Build Include="dbo\Tables\Countries.sql" />
+    <Build Include="dbo\Tables\RoastTypes_1.sql" />
     <Build Include="dbo\Tables\RoastersShops.sql" />
     <Build Include="dbo\Tables\Reviews.sql" />
+    <Build Include="dbo\Tables\ReviewDetails.sql" />
+    <Build Include="dbo\Tables\Countries.sql" />
+    <Build Include="dbo\Tables\CoffeeTypes_1.sql" />
+    <Build Include="dbo\Tables\Coffees.sql" />
+    <Build Include="dbo\Tables\BrewTypes_1.sql" />
+    <None Include="dab-options.json" />
   </ItemGroup>
 </Project>

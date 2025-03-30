@@ -1,14 +1,14 @@
-import { GameHistory, ExpansionsVersions } from './GameHistory.tsx';
+import { GameHistory } from './GameHistory.tsx';
 import {
-    Box, TextField, Select, FormControlLabel, Checkbox, Paper, Grid,
-    Typography, Divider, DialogContent, DialogActions, DialogTitle
+    Box, TextField, FormControlLabel, Checkbox, Grid,
+    Typography, Divider, DialogTitle
 } from "@mui/material";
 import * as React from 'react';
 function GameHistoryForm(props: { needMain: boolean, needSub: boolean, history?: GameHistory, orderIndex?: number} ){
     const needMain: boolean = props.needMain;
     const needSub: boolean = props.needSub;
-    const history: GameHistory = props.history;
-    const orderIndex: number = props.orderIndex;
+    //const history: GameHistory = props.history;
+    //const orderIndex: number = props.orderIndex;
     
 
     const mainForm = needMain === false

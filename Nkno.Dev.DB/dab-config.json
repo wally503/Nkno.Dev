@@ -1,0 +1,525 @@
+{
+  "$schema": "https://github.com/Azure/data-api-builder/releases/download/v1.4.26/dab.draft.schema.json",
+  "data-source": {
+    "database-type": "mssql",
+    "connection-string": "@env('dab-connection-string')",
+    "options": {
+      "set-session-context": false
+    }
+  },
+  "runtime": {
+    "rest": {
+      "enabled": true,
+      "path": "/api",
+      "request-body-strict": true
+    },
+    "graphql": {
+      "enabled": true,
+      "path": "/graphql",
+      "allow-introspection": true
+    },
+    "host": {
+      "cors": {
+        "origins": [],
+        "allow-credentials": false
+      },
+      "authentication": {
+        "provider": "StaticWebApps"
+      },
+      "mode": "development"
+    }
+  },
+  "entities": {
+    "BrewType": {
+      "source": {
+        "object": "[dbo].[BrewType]",
+        "type": "table"
+      },
+      "graphql": {
+        "enabled": true,
+        "type": {
+          "singular": "BrewType",
+          "plural": "BrewTypes"
+        }
+      },
+      "rest": {
+        "enabled": true
+      },
+      "permissions": [
+        {
+          "role": "anonymous",
+          "actions": [
+            {
+              "action": "*",
+              "fields": {
+                "exclude": [],
+                "include": [
+                  "Id",
+                  "Name"
+                ]
+              }
+            }
+          ]
+        }
+      ],
+      "relationships": {
+        "CoffeeType": {
+          "cardinality": "many",
+          "target.entity": "CoffeeType",
+          "source.fields": [],
+          "target.fields": [],
+          "linking.source.fields": [],
+          "linking.target.fields": []
+        }
+      }
+    },
+    "Coffee": {
+      "source": {
+        "object": "[dbo].[Coffees]",
+        "type": "table"
+      },
+      "graphql": {
+        "enabled": true,
+        "type": {
+          "singular": "Coffee",
+          "plural": "Coffees"
+        }
+      },
+      "rest": {
+        "enabled": true
+      },
+      "permissions": [
+        {
+          "role": "anonymous",
+          "actions": [
+            {
+              "action": "*",
+              "fields": {
+                "exclude": [],
+                "include": [
+                  "Id",
+                  "UserId",
+                  "RoasterId",
+                  "OriginCountryId",
+                  "CoffeeTypeId",
+                  "RoastId",
+                  "FlavourNotes",
+                  "IsDrink"
+                ]
+              }
+            }
+          ]
+        }
+      ],
+      "relationships": {
+        "CoffeeType": {
+          "cardinality": "one",
+          "target.entity": "CoffeeType",
+          "source.fields": [],
+          "target.fields": [],
+          "linking.source.fields": [],
+          "linking.target.fields": []
+        },
+        "Country": {
+          "cardinality": "one",
+          "target.entity": "Country",
+          "source.fields": [],
+          "target.fields": [],
+          "linking.source.fields": [],
+          "linking.target.fields": []
+        },
+        "RoastersShop": {
+          "cardinality": "one",
+          "target.entity": "RoastersShop",
+          "source.fields": [],
+          "target.fields": [],
+          "linking.source.fields": [],
+          "linking.target.fields": []
+        },
+        "RoastType": {
+          "cardinality": "one",
+          "target.entity": "RoastType",
+          "source.fields": [],
+          "target.fields": [],
+          "linking.source.fields": [],
+          "linking.target.fields": []
+        },
+        "User": {
+          "cardinality": "one",
+          "target.entity": "User",
+          "source.fields": [],
+          "target.fields": [],
+          "linking.source.fields": [],
+          "linking.target.fields": []
+        },
+        "Review": {
+          "cardinality": "many",
+          "target.entity": "Review",
+          "source.fields": [],
+          "target.fields": [],
+          "linking.source.fields": [],
+          "linking.target.fields": []
+        }
+      }
+    },
+    "CoffeeType": {
+      "source": {
+        "object": "[dbo].[CoffeeType]",
+        "type": "table"
+      },
+      "graphql": {
+        "enabled": true,
+        "type": {
+          "singular": "CoffeeType",
+          "plural": "CoffeeTypes"
+        }
+      },
+      "rest": {
+        "enabled": true
+      },
+      "permissions": [
+        {
+          "role": "anonymous",
+          "actions": [
+            {
+              "action": "*",
+              "fields": {
+                "exclude": [],
+                "include": [
+                  "Id",
+                  "CoffeeTypeName",
+                  "BrewTypeId"
+                ]
+              }
+            }
+          ]
+        }
+      ],
+      "relationships": {
+        "Coffee": {
+          "cardinality": "many",
+          "target.entity": "Coffee",
+          "source.fields": [],
+          "target.fields": [],
+          "linking.source.fields": [],
+          "linking.target.fields": []
+        },
+        "BrewType": {
+          "cardinality": "one",
+          "target.entity": "BrewType",
+          "source.fields": [],
+          "target.fields": [],
+          "linking.source.fields": [],
+          "linking.target.fields": []
+        }
+      }
+    },
+    "Country": {
+      "source": {
+        "object": "[dbo].[Countries]",
+        "type": "table"
+      },
+      "graphql": {
+        "enabled": true,
+        "type": {
+          "singular": "Country",
+          "plural": "Countries"
+        }
+      },
+      "rest": {
+        "enabled": true
+      },
+      "permissions": [
+        {
+          "role": "anonymous",
+          "actions": [
+            {
+              "action": "*",
+              "fields": {
+                "exclude": [],
+                "include": [
+                  "Id",
+                  "Name"
+                ]
+              }
+            }
+          ]
+        }
+      ],
+      "relationships": {
+        "Coffee": {
+          "cardinality": "many",
+          "target.entity": "Coffee",
+          "source.fields": [],
+          "target.fields": [],
+          "linking.source.fields": [],
+          "linking.target.fields": []
+        },
+        "RoastersShop": {
+          "cardinality": "many",
+          "target.entity": "RoastersShop",
+          "source.fields": [],
+          "target.fields": [],
+          "linking.source.fields": [],
+          "linking.target.fields": []
+        }
+      }
+    },
+    "ReviewDetail": {
+      "source": {
+        "object": "[dbo].[ReviewDetails]",
+        "type": "table"
+      },
+      "graphql": {
+        "enabled": true,
+        "type": {
+          "singular": "ReviewDetail",
+          "plural": "ReviewDetails"
+        }
+      },
+      "rest": {
+        "enabled": true
+      },
+      "permissions": [
+        {
+          "role": "anonymous",
+          "actions": [
+            {
+              "action": "*",
+              "fields": {
+                "exclude": [],
+                "include": [
+                  "Id",
+                  "Comments",
+                  "Rating5",
+                  "RatingThumbUpDown"
+                ]
+              }
+            }
+          ]
+        }
+      ],
+      "relationships": {
+        "Review": {
+          "cardinality": "many",
+          "target.entity": "Review",
+          "source.fields": [],
+          "target.fields": [],
+          "linking.source.fields": [],
+          "linking.target.fields": []
+        }
+      }
+    },
+    "Review": {
+      "source": {
+        "object": "[dbo].[Reviews]",
+        "type": "table"
+      },
+      "graphql": {
+        "enabled": true,
+        "type": {
+          "singular": "Review",
+          "plural": "Reviews"
+        }
+      },
+      "rest": {
+        "enabled": true
+      },
+      "permissions": [
+        {
+          "role": "anonymous",
+          "actions": [
+            {
+              "action": "*",
+              "fields": {
+                "exclude": [],
+                "include": [
+                  "Id",
+                  "UserId",
+                  "CoffeeId",
+                  "ReviewDetailId"
+                ]
+              }
+            }
+          ]
+        }
+      ],
+      "relationships": {
+        "Coffee": {
+          "cardinality": "one",
+          "target.entity": "Coffee",
+          "source.fields": [],
+          "target.fields": [],
+          "linking.source.fields": [],
+          "linking.target.fields": []
+        },
+        "ReviewDetail": {
+          "cardinality": "one",
+          "target.entity": "ReviewDetail",
+          "source.fields": [],
+          "target.fields": [],
+          "linking.source.fields": [],
+          "linking.target.fields": []
+        },
+        "User": {
+          "cardinality": "one",
+          "target.entity": "User",
+          "source.fields": [],
+          "target.fields": [],
+          "linking.source.fields": [],
+          "linking.target.fields": []
+        }
+      }
+    },
+    "RoastersShop": {
+      "source": {
+        "object": "[dbo].[RoastersShops]",
+        "type": "table"
+      },
+      "graphql": {
+        "enabled": true,
+        "type": {
+          "singular": "RoastersShop",
+          "plural": "RoastersShops"
+        }
+      },
+      "rest": {
+        "enabled": true
+      },
+      "permissions": [
+        {
+          "role": "anonymous",
+          "actions": [
+            {
+              "action": "*",
+              "fields": {
+                "exclude": [],
+                "include": [
+                  "Id",
+                  "Name",
+                  "CountryId",
+                  "City",
+                  "Website"
+                ]
+              }
+            }
+          ]
+        }
+      ],
+      "relationships": {
+        "Coffee": {
+          "cardinality": "many",
+          "target.entity": "Coffee",
+          "source.fields": [],
+          "target.fields": [],
+          "linking.source.fields": [],
+          "linking.target.fields": []
+        },
+        "Country": {
+          "cardinality": "one",
+          "target.entity": "Country",
+          "source.fields": [],
+          "target.fields": [],
+          "linking.source.fields": [],
+          "linking.target.fields": []
+        }
+      }
+    },
+    "RoastType": {
+      "source": {
+        "object": "[dbo].[RoastType]",
+        "type": "table"
+      },
+      "graphql": {
+        "enabled": true,
+        "type": {
+          "singular": "RoastType",
+          "plural": "RoastTypes"
+        }
+      },
+      "rest": {
+        "enabled": true
+      },
+      "permissions": [
+        {
+          "role": "anonymous",
+          "actions": [
+            {
+              "action": "*",
+              "fields": {
+                "exclude": [],
+                "include": [
+                  "Id",
+                  "Name"
+                ]
+              }
+            }
+          ]
+        }
+      ],
+      "relationships": {
+        "Coffee": {
+          "cardinality": "many",
+          "target.entity": "Coffee",
+          "source.fields": [],
+          "target.fields": [],
+          "linking.source.fields": [],
+          "linking.target.fields": []
+        }
+      }
+    },
+    "User": {
+      "source": {
+        "object": "[dbo].[Users]",
+        "type": "table"
+      },
+      "graphql": {
+        "enabled": true,
+        "type": {
+          "singular": "User",
+          "plural": "Users"
+        }
+      },
+      "rest": {
+        "enabled": true
+      },
+      "permissions": [
+        {
+          "role": "anonymous",
+          "actions": [
+            {
+              "action": "*",
+              "fields": {
+                "exclude": [],
+                "include": [
+                  "Id",
+                  "Username",
+                  "Name",
+                  "Location"
+                ]
+              }
+            }
+          ]
+        }
+      ],
+      "relationships": {
+        "Coffee": {
+          "cardinality": "many",
+          "target.entity": "Coffee",
+          "source.fields": [],
+          "target.fields": [],
+          "linking.source.fields": [],
+          "linking.target.fields": []
+        },
+        "Review": {
+          "cardinality": "many",
+          "target.entity": "Review",
+          "source.fields": [],
+          "target.fields": [],
+          "linking.source.fields": [],
+          "linking.target.fields": []
+        }
+      }
+    }
+  }
+}
