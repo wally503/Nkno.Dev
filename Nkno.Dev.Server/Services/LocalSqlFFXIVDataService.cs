@@ -6,10 +6,10 @@ using System.Runtime.CompilerServices;
 
 namespace Nkno.Dev.Server.Sources
 {
-    public class LocalSqlFFXIVDataService : IFFXIVDataService
+    public class LocalSqlFFXIVDataService : IFFXIVData
     {
-        private readonly LocalSqlDbContext _dbContext;
-        public LocalSqlFFXIVDataService(LocalSqlDbContext context) 
+        private readonly LocalFFXIVSqlDbContext _dbContext;
+        public LocalSqlFFXIVDataService(LocalFFXIVSqlDbContext context) 
         { 
             _dbContext = context;
         }

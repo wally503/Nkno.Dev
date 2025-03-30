@@ -4,7 +4,7 @@ using Nkno.Dev.Server.Models;
 
 namespace Nkno.Dev.Server.Sources
 {
-    public class LocalGameHistoryDataService : IGameHistoryDataService
+    public class LocalGameHistoryDataService : IGameHistoryData
     {
         private readonly LocalMongoDbContext _dbContext;
         public LocalGameHistoryDataService(LocalMongoDbContext context)

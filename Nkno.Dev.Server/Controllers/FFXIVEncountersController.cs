@@ -12,8 +12,8 @@ namespace Nkno.Dev.Server.Controllers
     [Route("api/[controller]")]
     public class FFXIVEncountersController : ControllerBase
     {
-        private IFFXIVDataService _dataSource;
-        public FFXIVEncountersController(IFFXIVDataService ffxivDataSource)
+        private IFFXIVData _dataSource;
+        public FFXIVEncountersController(IFFXIVData ffxivDataSource)
         {
             _dataSource = ffxivDataSource;
         }

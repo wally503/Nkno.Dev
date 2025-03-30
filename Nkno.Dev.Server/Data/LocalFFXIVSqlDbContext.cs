@@ -5,9 +5,9 @@ using System.Data.Common;
 
 namespace Nkno.Dev.Server.Data
 {
-    public class LocalSqlDbContext : DbContext
+    public class LocalFFXIVSqlDbContext : DbContext
     {
-        public LocalSqlDbContext(DbContextOptions<LocalSqlDbContext> options) : base(options)
+        public LocalFFXIVSqlDbContext(DbContextOptions<LocalFFXIVSqlDbContext> options) : base(options)
         {
         }
 
@@ -15,6 +15,8 @@ namespace Nkno.Dev.Server.Data
         {
             modelBuilder.Entity<FFXIVInstanceData>().ToTable("InstanceData");
         }
+
         public DbSet<FFXIVInstanceData> InstanceData { get; set; }
+
     }
 }

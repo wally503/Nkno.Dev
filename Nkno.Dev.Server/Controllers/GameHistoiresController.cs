@@ -4,12 +4,12 @@ using Nkno.Dev.Server.Models;
 
 namespace Nkno.Dev.Server.Controllers
 {
-    [ApiController]
+   
     [Route("api/[controller]")]
     public class GameHistoriesController : ControllerBase
     {
-        private IGameHistoryDataService _dataSource;
-        public GameHistoriesController(IGameHistoryDataService dataSource)
+        private IGameHistoryData _dataSource;
+        public GameHistoriesController(IGameHistoryData dataSource)
         {
             _dataSource = dataSource;
         }
@@ -20,8 +20,7 @@ namespace Nkno.Dev.Server.Controllers
             return _dataSource.GetGameHistories(take, page);
         }
 
-        [HttpPost]
-        [Route("addHistory")]
+        [HttpPost("addHistory")]
         public void AddGameHistory(GameHistory history)
         {
             _dataSource.AddGameHistory(history);

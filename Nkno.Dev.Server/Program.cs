@@ -4,13 +4,15 @@ using Nkno.Dev.Server.Interfaces;
 using Nkno.Dev.Server.Sources;
 using System.Reflection;
 using Nkno.Dev.Server.Settings;
+using Nkno.Dev.Server.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Secret Value Services
 ConfigurationBuilder configurationBuilder = new ConfigurationBuilder();
 IConfiguration configuration = configurationBuilder.AddUserSecrets<Program>().Build();
-string? localSqlConnectionString = configuration.GetValue<string>("LocalSql");
+string? ffxivConnString = configuration.GetValue<string>("LocalSqlAct");
+string? coffeeConnString = configuration.GetValue<string>("LocalSqlCoffee");
 
 
 
@@ -20,11 +22,17 @@ if (buildConfiguration == "Debug")
 {
     //Local SQL DI
     Console.WriteLine("Running in debug");
-    builder.Services.AddDbContextFactory<LocalSqlDbContext>(
-        options => options.UseSqlServer(localSqlConnectionString)
+    builder.Services.AddDbContextFactory<LocalFFXIVSqlDbContext>(
+        options => options.UseSqlServer(ffxivConnString)
     );
+    builder.Services.AddDbContextFactory<LocalCoffeeReviewSqlDbContext>(
+    options => options.UseSqlServer(coffeeConnString)
+    );
+
     builder.Services.AddDatabaseDeveloperPageExceptionFilter();
-    builder.Services.AddTransient<IFFXIVDataService, LocalSqlFFXIVDataService>();
+
+    builder.Services.AddTransient<IFFXIVData, LocalSqlFFXIVDataService>();
+    builder.Services.AddTransient<ICoffeeReviewData, LocalSqlCoffeeDataService>();
 
     //Local MongoDB DI
     var mongoDbSettings = builder.Configuration.GetSection("MongoDbSettings").Get<MongoDbSettings>();
@@ -32,12 +40,12 @@ if (buildConfiguration == "Debug")
     builder.Services.AddDbContext<LocalMongoDbContext>(options =>
         options.UseMongoDB(mongoDbSettings?.ConnectionString ?? "", mongoDbSettings?.DatabaseName ?? "")
     );
-    builder.Services.AddScoped<IGameHistoryDataService, LocalGameHistoryDataService>();
+    builder.Services.AddScoped<IGameHistoryData, LocalGameHistoryDataService>();
 }
 else 
 {
     Console.WriteLine($"Running in {buildConfiguration}");
-    throw new NotImplementedException("Add your release DI");
+    throw new NotImplementedException("Add your release DI, dummy");
 }
 
 // Add services to the container.
